@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find hades_description)/urdf/base/wheel.urdf.xacro" />
+    <xacro:include filename="$(find hades_description)/urdf/sensors/laser.urdf.xacro" />
+
+    <link name="base_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="1.57080 0 1.57080"/>
+            <geometry>
+                <mesh filename="package://hades_description/meshes/base/base.dae" scale="0.001 0.001 0.001"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0.08" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.08" length="0.06"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <origin xyz="0 0 0.05" rpy="0 0 0"/>
+            <mass value="5.0"/>
+            <inertia ixx="0.05" ixy="0.0" ixz="0.0" 
+                     iyy="0.05" iyz="0.0" 
+                     izz="0.08"/>
+        </inertial>
+    </link>
+
+    <xacro:hades_wheel prefix="front" 
+                       x_offset="0.215" 
+                       y_offset="0.0" 
+                       z_offset="0.022886" 
+                       yaw_offset="0.0"/>
+    
+    <xacro:hades_wheel prefix="back_left" 
+                       x_offset="-0.1075" 
+                       y_offset="0.186195" 
+                       z_offset="0.022886" 
+                       yaw_offset="2.0944"/>
+    
+    <xacro:hades_wheel prefix="back_right" 
+                       x_offset="-0.1075" 
+                       y_offset="-0.186195" 
+                       z_offset="0.022886" 
+                       yaw_offset="-2.0944"/>
+
+</robot>

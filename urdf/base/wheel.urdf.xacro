@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:macro name="hades_wheel" params="prefix x_offset y_offset z_offset yaw_offset">
+        <link name="${prefix}_wheel_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+                <geometry>
+                    <mesh filename="package://hades_description/meshes/wheels/wheel.dae" scale="0.001 0.001 0.001"/>
+                </geometry>
+            </visual>
+
+            <collision>
+                <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+                <geometry>
+                    <cylinder radius="0.1125" length="0.04"/>
+                </geometry>
+            </collision>
+
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+                <mass value="0.8"/>
+                <inertia ixx="0.00259" ixy="0.0" ixz="0.0" 
+                         iyy="0.00506" iyz="0.0" 
+                         izz="0.00259"/>
+            </inertial>
+        </link>
+
+        <joint name="${prefix}_wheel_joint" type="continuous">
+            <parent link="base_link"/>
+            <child link="${prefix}_wheel_link"/>
+            <origin xyz="${x_offset} ${y_offset} ${z_offset}" rpy="0 0 ${yaw_offset}"/>
+            <axis xyz="-1 0 0"/>
+            <dynamics damping="0.01" friction="0.05"/>
+        </joint>
+        
+        
+        <gazebo reference="${prefix}_wheel_link">
+            <!-- Atrito primario (tracao) -->
+            <mu1>1.5</mu1>
+            <!-- Atrito secundario (direcao dos roletes livres) -->
+            <mu2>0.01</mu2>
+            <!-- Direcao de contato primario em relacao ao link local -->
+            <fdir1>0 1 0</fdir1>
+            <!-- Rigidez e amortecimento do contato com o solo -->
+            <kp>10000000.0</kp>
+            <kd>1.0</kd>
+            <minDepth>0.002</minDepth>
+            <maxVel>0.1</maxVel>
+        </gazebo>
+    </xacro:macro>
+
+</robot>
